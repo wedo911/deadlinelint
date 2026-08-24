@@ -192,12 +192,16 @@ export function formatText(report) {
   return `${lines.join("\n")}\n`;
 }
 
-function githubEscape(value) {
+function githubPropertyEscape(value) {
   return String(value).replaceAll("%", "%25").replaceAll("\r", "%0D").replaceAll("\n", "%0A").replaceAll(":", "%3A").replaceAll(",", "%2C");
 }
 
+function githubMessageEscape(value) {
+  return String(value).replaceAll("%", "%25").replaceAll("\r", "%0D").replaceAll("\n", "%0A");
+}
+
 export function formatGitHub(report) {
-  const lines = report.issues.map((item) => `::warning file=${githubEscape(item.file)},line=${item.line},col=${item.column},title=${item.rule}%3A ${githubEscape(item.title)}::${githubEscape(`${item.message} ${item.suggestion}`)}`);
+  const lines = report.issues.map((item) => `::warning file=${githubPropertyEscape(item.file)},line=${item.line},col=${item.column},title=${githubPropertyEscape(`${item.rule}: ${item.title}`)}::${githubMessageEscape(`${item.message} ${item.suggestion}`)}`);
   lines.push(`DeadlineLint: ${report.summary.issues} issue(s) in ${report.summary.files} file(s).`);
   return `${lines.join("\n")}\n`;
 }

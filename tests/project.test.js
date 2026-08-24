@@ -31,5 +31,5 @@ test("CI and Pages test before publishing", () => {
   assert.match(ci, /permissions:\s+contents: read/);
   assert.match(pages, /npm test/);
   assert.match(pages, /npm run check/);
-  assert.match(pages, /actions\/deploy-pages@v4/);
+  assert.match(pages, /actions\/deploy-pages@v5/);
 });

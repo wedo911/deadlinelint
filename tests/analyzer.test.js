@@ -82,4 +82,5 @@ test("builds stable reports and formatters", () => {
   assert.equal(Object.keys(report.summary.byRule).length, Object.keys(RULES).length);
   assert.match(formatText(report), /a,b\.md:1/);
   assert.match(formatGitHub(report), /file=a%2Cb\.md,line=1/);
+  assert.doesNotMatch(formatGitHub(report).split("::").at(-1), /%2C|%3A/);
 });
