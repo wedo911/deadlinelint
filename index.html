@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="DeadlineLint finds ambiguous dates, relative deadlines, and times without clear zones. Analysis stays in your browser.">
+    <meta name="theme-color" content="#173b35">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+    <title>DeadlineLint — make dates travel well</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#workspace">Skip to checker</a>
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="DeadlineLint home">
+        <span class="brand-mark" aria-hidden="true">D</span>
+        <span>DeadlineLint</span>
+      </a>
+      <nav aria-label="Project links">
+        <a href="#rules">Rules</a>
+        <a href="https://github.com/wedo911/deadlinelint">GitHub</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">A local clarity check for public information</p>
+          <h1 id="page-title">Make every deadline mean the same thing everywhere.</h1>
+          <p class="hero-copy">Find dates that swap day and month, relative wording that expires, and times that leave readers guessing the zone.</p>
+          <p class="arabic-line" lang="ar" dir="rtl">افحص المواعيد الغامضة بالعربية والإنجليزية دون رفع النص إلى أي خادم.</p>
+        </div>
+        <aside class="privacy-card" aria-label="Privacy information">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4.5 5v5.7c0 4.8 3 9.2 7.5 11.3 4.5-2.1 7.5-6.5 7.5-11.3V5L12 2Zm0 3 4.5 1.8v3.9c0 3.5-1.8 6.7-4.5 8.4-2.7-1.7-4.5-4.9-4.5-8.4V6.8L12 5Z"/></svg>
+          <div><strong>Your text stays here.</strong><span>No network requests, storage, or analytics.</span></div>
+        </aside>
+      </section>
+
+      <section class="workspace" id="workspace" aria-label="Deadline checker">
+        <div class="panel editor-panel">
+          <div class="panel-heading">
+            <div><p class="step">01</p><h2>Paste public-facing text</h2></div>
+            <span class="local-tag">Local only</span>
+          </div>
+          <label for="source-text">Text to check <span lang="ar" dir="rtl">/ النص المراد فحصه</span></label>
+          <textarea id="source-text" dir="auto" spellcheck="true" maxlength="2000000" aria-describedby="source-help" placeholder="Applications close April 3, 2026 at 17:00 UTC+03:00."></textarea>
+          <p class="field-help" id="source-help">Markdown code fences are skipped by default. Maximum 2,000,000 characters.</p>
+
+          <details id="rules">
+            <summary>Choose rules</summary>
+            <fieldset>
+              <legend>Enabled checks</legend>
+              <div class="rule-grid" id="rule-options"></div>
+            </fieldset>
+          </details>
+
+          <div class="actions">
+            <button class="button primary" id="analyze-button" type="button">Check clarity</button>
+            <button class="button secondary" id="sample-button" type="button">Load sample</button>
+            <button class="button ghost" id="clear-button" type="button">Clear</button>
+          </div>
+        </div>
+
+        <div class="panel result-panel" aria-labelledby="results-title">
+          <div class="panel-heading">
+            <div><p class="step">02</p><h2 id="results-title">Review findings</h2></div>
+            <button class="download-button" id="download-button" type="button" disabled>Download JSON</button>
+          </div>
+          <div class="result-status idle" id="result-status" role="status" aria-live="polite">
+            <span class="status-icon" aria-hidden="true">—</span>
+            <div><strong>Ready when you are</strong><span>Run the check to see precise lines and suggested fixes.</span></div>
+          </div>
+          <div id="result-list"></div>
+          <noscript><p class="noscript">JavaScript is required for local analysis. No data is sent away.</p></noscript>
+        </div>
+      </section>
+
+      <section class="principles" aria-labelledby="principles-title">
+        <p class="eyebrow">What the result means</p>
+        <h2 id="principles-title">A prompt to clarify, never a guessed interpretation.</h2>
+        <div class="principle-grid">
+          <article><span>01</span><h3>Deterministic</h3><p>The same text and rule set always produce the same report.</p></article>
+          <article><span>02</span><h3>Bilingual</h3><p>English and Arabic relative dates, context words, and numerals are recognized.</p></article>
+          <article><span>03</span><h3>Human-reviewed</h3><p>Findings identify ambiguity. They do not decide what the author intended.</p></article>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>DeadlineLint · MIT licensed</span>
+      <span>Built for information that crosses borders and time zones.</span>
+    </footer>
+    <script type="module" src="src/app.js"></script>
+  </body>
+</html>

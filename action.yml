@@ -1,0 +1,39 @@
+name: DeadlineLint
+description: Find ambiguous dates, relative deadlines, and times without clear zones in public-facing text.
+author: wedo911
+branding:
+  icon: clock
+  color: green
+
+inputs:
+  path:
+    description: File or directory to scan.
+    required: false
+    default: .
+  config:
+    description: Optional configuration file path.
+    required: false
+    default: .deadlinelintrc.json
+  fail-on-findings:
+    description: Fail the step when DeadlineLint finds review items.
+    required: false
+    default: "true"
+
+runs:
+  using: composite
+  steps:
+    - name: Check deadline clarity
+      shell: bash
+      env:
+        DEADLINELINT_PATH: ${{ inputs.path }}
+        DEADLINELINT_CONFIG: ${{ inputs.config }}
+        DEADLINELINT_FAIL: ${{ inputs.fail-on-findings }}
+      run: |
+        args=("$DEADLINELINT_PATH" --format github)
+        if [[ -f "$DEADLINELINT_CONFIG" ]]; then
+          args+=(--config "$DEADLINELINT_CONFIG")
+        fi
+        if [[ "${DEADLINELINT_FAIL,,}" == "false" ]]; then
+          args+=(--no-fail)
+        fi
+        node "$GITHUB_ACTION_PATH/src/cli.js" "${args[@]}"
